@@ -63,14 +63,14 @@ def _writeString(data):
     lenlen = _writeUnsignedInt(bytelen)
 
     return chr(0b00100000 | (len(lenlen) - 1)).encode('ascii') + lenlen + bytedata
-    
+
 def _writeBinary(data):
     bytelen = len(data)
 
     lenlen = _writeUnsignedInt(bytelen)
 
     return chr(0b00100000 | (len(lenlen) - 1)).encode('ascii') + lenlen + data
-    
+
 def _writeNull():
     return chr(0b01100000).encode('ascii')
 

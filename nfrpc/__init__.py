@@ -1,4 +1,5 @@
 from . import frpc
+from . import writer
 
 class ParseErrorException(Exception):
     def __init__(self, msg):
@@ -14,4 +15,5 @@ def parseFRPCMessage(msg):
         raise ParseErrorException(e)
 
 def createFRPCMessage(msg):
-    raise 'Not implemented yet'
+    msg = writer._encodeValue(msg)
+    return msg
