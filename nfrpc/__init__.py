@@ -1,4 +1,4 @@
-import frpc
+from . import frpc
 
 class ParseErrorException(Exception):
     def __init__(self, msg):
@@ -10,7 +10,7 @@ def parseFRPCMessage(msg):
     try:
         msg, len = frpc.convertMsg(msg)
         return msg
-    except Exception, e:
+    except Exception as e:
         raise ParseErrorException(e)
 
 def createFRPCMessage(msg):

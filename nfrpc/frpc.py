@@ -58,7 +58,7 @@ def _parseStruct(msg):
         name = msg[nextMemberStart + 1: nextMemberStart + 1 + nameLen]\
                    .decode('utf-8')
 
-        msgContent, msgLength = convertMsg([nextMemberStart + 1 + nameLen:])
+        msgContent, msgLength = convertMsg(msg[nextMemberStart + 1 + nameLen:])
         nextMemberStart = nextMemberStart + 1 + nameLen + msgLength
         byteMemberSize += 1 + nameLen + msgLength
         content[name] = msgContent
@@ -75,7 +75,7 @@ def _parseArray(msg):
     nextMemberStart = 1 + l
 
     for member in range(0, memberCount):
-        msgContent, msgLength = convertMsg([nextMemberStart:])
+        msgContent, msgLength = convertMsg(msg[nextMemberStart:])
         nextMemberStart = nextMemberStart + msgLength
         byteMemberSize += msgLength
         content.append(msgContent)
@@ -99,7 +99,7 @@ def _parseDouble(msg):
     return struct.unpack("<d", msg[1:9]), 9
 
 def _parseDatetime(msg):
-    ts = int.from_bytesmsg([3:7], byteorder='little')
+    ts = int.from_bytesmsg(msg[3:7], byteorder='little')
     if ts == -1:
         raise 'Datetime outside of epoch not supported, yet'
     date = datetime.datetime.utcfromtimestamp(ts)
